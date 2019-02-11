@@ -67,7 +67,7 @@ class App {
     const contentmentInput = select("#contentment-input");
     const productivityInput = select("#productivity-input");
     const submitInput = select("#submit-input");
-    
+
     // on buttonpress submit feelings!
     submitInput.mousePressed(this.submitFeelings);
     // create an array of those inputs to iterate through them
@@ -86,7 +86,7 @@ class App {
     });
   }
 
-showLogin(error) {
+  showLogin(error) {
     if (selectAll('.login').length) {
       select('.heading').elt.insertAdjacentHTML('beforeend', `<p>There was an error: ${error.message}</p>`);
     } else {
@@ -105,7 +105,7 @@ showLogin(error) {
 
   async submitFeelings(e) {
     try {
-    //   e.preventDefault();
+      //   e.preventDefault();
       console.log("submitted!")
       const myForm = new FormData(document.querySelector("#moodForm"));
       const payload = {
@@ -121,7 +121,7 @@ showLogin(error) {
       await this.showViz();
 
     } catch (error) {
-        return error;
+      return error;
     }
   }
 
@@ -162,54 +162,57 @@ showLogin(error) {
     }
   }
 
-  setup(){
-      document.addEventListener('click', async ev => {
-        switch(ev.target.id) {
-        case 'signup': {
-          // For signup, create a new user and then log them in
-          const user = this.getCredentials();
-      
-          await this.signup(user);
-          // If successful log them in
-          await this.login(user);
-      
-          break;
-        }
-        case 'login': {
-          const user = this.getCredentials();
-      
-          await this.login(user);
-      
-          break;
-        }
-        case 'logout': {
-          await client.logout();
-      
-          select('#app').elt.innerHTML = views.loginHTML;
-      
-          break;
-        }
-        case 'admin': {    
+  setup() {
+    document.addEventListener('click', async ev => {
+      switch (ev.target.id) {
+        case 'signup':
+          {
+            // For signup, create a new user and then log them in
+            const user = this.getCredentials();
+
+            await this.signup(user);
+            // If successful log them in
+            await this.login(user);
+
+            break;
+          }
+        case 'login':
+          {
+            const user = this.getCredentials();
+
+            await this.login(user);
+
+            break;
+          }
+        case 'logout':
+          {
+            await client.logout();
+
+            select('#app').elt.innerHTML = views.loginHTML;
+
+            break;
+          }
+        case 'admin':
+          {
             await this.showAdmin();
             break;
-        }
-        case 'submitFeelings': {  
+          }
+        case 'submitFeelings':
+          {
             await this.submitFeelings();
-            
+
             break;
-        }
-        case 'vis': {  
-            
+          }
+        case 'vis':
+          {
+
             await client.authenticate();
             await this.showViz();
             break;
-        }
-    
-        }
-      });
+          }
+
+      }
+    });
   }
-
-
-
 
 }

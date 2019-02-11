@@ -13,72 +13,76 @@ Let's pick up where we left off and start developing our interface.
 > We will need to style our application. Create a style.css file in the `/public` folder and add it as a `<link rel="stylesheet" href="style.css">` to your html file. Add these CSS rules into that file:. I'm glossing over this becuase it is not super important for the overall concept, but rather cosmetic. You all should go in and add some personal flavor to your apps.
 
 ```css
- *{
-    box-sizing:border-box;
+ /* App Styles */
+* {
+  box-sizing: border-box;
 }
 
-body,html{
-    width:100%;
-    max-width:1000px;
-    height:100%;
-    padding: 10px;
-    font-family: 'Monaco', Helvetica, sans-serif;
+body,
+html {
+  width: 100%;
+  max-width: 1000px;
+  height: 100%;
+  padding: 10px;
+  font-family: 'Monaco', Helvetica, sans-serif;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    max-width:800px;
-}
-input[type="radio"]{
-    width: auto;
+input {
+  width: 100%;
+  padding: 10px;
+  max-width: 800px;
 }
 
-fieldset{
-    border-radius:4px;
-    max-width:800px;
+input[type="radio"] {
+  width: auto;
+}
+
+fieldset {
+  border-radius: 4px;
+  max-width: 800px;
 }
 
 .grid-container {
-    display: grid;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    grid-template-columns: repeat(auto-fill, 172px);
-    padding-bottom:60px;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 172px);
+  padding-bottom: 60px;
 }
 
-.grid-item{
-    border: 2px solid black;
-    padding:4px;
+.grid-item {
+  border: 2px solid black;
+  padding: 4px;
 }
 
-a{
-    color:black;
-    text-decoration: none;
+a {
+  color: black;
+  text-decoration: none;
 }
 
 
-#myControls{
-    grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 4;
-    padding:1em;
-} 
-
-#submit-input{
-    width:100px;
-    height: 4em;
-    background-color:darkslateblue;
-    color:white;
-    border-radius: 4px;
-    border:none;
-    margin-top:2em;
+#myControls {
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  padding: 10px;
 }
 
-.btn{
-    cursor:pointer;
+#submit-input {
+  width: 100px;
+  height: 4em;
+  background-color: darkslateblue;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  margin-top: 20px;
 }
+
+.btn {
+  cursor: pointer;
+}
+
 ```
 
 
@@ -183,105 +187,105 @@ Let's use a javascript `class` called `Views` to store our view templates so we 
 ```js
 
 class Views {
-  constructor() {
-
-    this.loginHTML = `
-    <main class="login container">
-        <section>
-            <h1>My Data Feelings Log</h1>
-            <p>A generative data visualization of my feelings submitted every day.</p>
-        </section>
-        <section>
-        <h2 class="heading">Log in or signup</h2>
-        <form class="form">
-            <fieldset>
-              <input class="block" type="email" name="email" placeholder="email">
-            </fieldset>
-    
-            <fieldset>
-              <input class="block" type="password" name="password" placeholder="password">
-            </fieldset>
-    
-            <button type="button" id="login" class="">
-              Log in
-            </button>
-    
-            <button type="button" id="signup" class="">
-              Sign up and log in
-            </button>
-          </form>
-        </div>
-        <section>
-    
-    </main>
-    `
-
-    this.visHTML = `
-    <main>
-        <header>
-            <h1>My Data Feelings <small class="btn" id="admin">⚙︎</small><small id="logout"  class="btn" style="font-size:12px; margin-left:20px; cursor:pointer">logout</small></h1>
-            <p>This is a series of daily visuals generated from my data feelings </p>
-            
-        </header>
-          <!-- all of our sketches will be added here -->
-          <section class="grid-container" id="vis-grid"></section>
-    </main>
-    `
-
-    this.adminHTML = `
-        <main>
-        <header>
-            <h1>Data Feelings Admin Console</h1>
-            <p>Use the various inputs to submit data about your mood</p>
-            <small class="btn" style="text-decoration:underline" id="vis">🔙 back to viz</small>
-        </header>
-        <section class="grid-container">
-        
-          <div class="" id="myControls">
-            <form id="moodForm" onsubmit="submitFeelings()" method="post">
-            <fieldset>
-              <legend>mood</legend>
-              <input type="text" id="mood-input" name="mood" placeholder="e.g. happy">
-            </fieldset>
-            <fieldset>
-                <legend>Anxiety</legend>
-                <input type="range" id="anxiety-input" name="anxiety" placeholder="e.g. happy" min="1" max="10">
-                <span id="anxiety-input-label"></span>
-            </fieldset>
-            <fieldset>
-                <legend>stress</legend>
-                <input type="range" id="stress-input" name="stress" placeholder="e.g. happy" min="1" max="10">
-                <span id="stress-input-label"></span>
-            </fieldset>
-            <fieldset>
-                <legend>contentment</legend>
-                <input type="range" id="contentment-input" name="contentment" placeholder="e.g. happy" min="1" max="10">
-                <span id="contentment-input-label"></span>
-            </fieldset>
-            <fieldset>
-                <legend>productivity</legend>
-                <input type="range" id="productivity-input" name="productivity" placeholder="e.g. happy" min="1" max="10">
-                <span id="productivity-input-label"></span>
-            </fieldset>
-            <fieldset>
-                <legend>fitness today?</legend>
-                <div>
-                    <p>Yes 😍</p>
-                    <input type="radio" id="fitness-input-yes" name="fitness" value="yes"> 
-                </div>
-                <div>
-                <p>No 😭</p>
-                <input type="radio" id="fitness-input-no" name="fitness" value="no" checked> 
-                </div>
-            </fieldset>
-            <input id="submit-input" type="submit" value="Submit! 🚀">
-          </form>
-          </div>
+    constructor() {
+  
+      this.loginHTML = `
+      <main class="login container">
+          <section>
+              <h1>My Data Feelings Log</h1>
+              <p>A generative data visualization of my feelings submitted every day.</p>
           </section>
-        </main>
-    `
+          <section>
+          <h2 class="heading">Log in or signup</h2>
+          <form class="form">
+              <fieldset>
+                <input class="block" type="email" name="email" placeholder="email">
+              </fieldset>
+      
+              <fieldset>
+                <input class="block" type="password" name="password" placeholder="password">
+              </fieldset>
+      
+              <button type="button" id="login" class="">
+                Log in
+              </button>
+      
+              <button type="button" id="signup" class="">
+                Sign up and log in
+              </button>
+            </form>
+          </div>
+          <section>
+      
+      </main>
+      `
+  
+      this.visHTML = `
+      <main>
+          <header>
+              <h1>My Data Feelings <small class="btn" id="admin">⚙︎</small><small id="logout"  class="btn" style="font-size:12px; margin-left:20px; cursor:pointer">logout</small></h1>
+              <p>This is a series of daily visuals generated from my data feelings </p>
+              
+          </header>
+            <!-- all of our sketches will be added here -->
+            <section class="grid-container" id="vis-grid"></section>
+      </main>
+      `
+  
+      this.adminHTML = `
+          <main>
+          <header>
+              <h1>Data Feelings Admin Console</h1>
+              <p>Use the various inputs to submit data about your mood</p>
+              <small class="btn" style="text-decoration:underline" id="vis">🔙 back to viz</small>
+          </header>
+          <section class="grid-container">
+          
+            <div class="" id="myControls">
+              <form id="moodForm" onsubmit="submitFeelings()" method="post">
+              <fieldset>
+                <legend>mood</legend>
+                <input type="text" id="mood-input" name="mood" placeholder="e.g. happy">
+              </fieldset>
+              <fieldset>
+                  <legend>Anxiety</legend>
+                  <input type="range" id="anxiety-input" name="anxiety" placeholder="e.g. happy" min="1" max="10">
+                  <span id="anxiety-input-label"></span>
+              </fieldset>
+              <fieldset>
+                  <legend>stress</legend>
+                  <input type="range" id="stress-input" name="stress" placeholder="e.g. happy" min="1" max="10">
+                  <span id="stress-input-label"></span>
+              </fieldset>
+              <fieldset>
+                  <legend>contentment</legend>
+                  <input type="range" id="contentment-input" name="contentment" placeholder="e.g. happy" min="1" max="10">
+                  <span id="contentment-input-label"></span>
+              </fieldset>
+              <fieldset>
+                  <legend>productivity</legend>
+                  <input type="range" id="productivity-input" name="productivity" placeholder="e.g. happy" min="1" max="10">
+                  <span id="productivity-input-label"></span>
+              </fieldset>
+              <fieldset>
+                  <legend>fitness today?</legend>
+                  <div>
+                      <p>Yes 😍</p>
+                      <input type="radio" id="fitness-input-yes" name="fitness" value="yes"> 
+                  </div>
+                  <div>
+                  <p>No 😭</p>
+                  <input type="radio" id="fitness-input-no" name="fitness" value="no" checked> 
+                  </div>
+              </fieldset>
+            </form>
+            <button id="submit-input">Submit! 🚀</button>
+            </div>
+            </section>
+          </main>
+      `
+    }
   }
-}
 ```
 
 Your HTML file will look like this. Note: I added in some HTML comments.
@@ -401,6 +405,7 @@ class App{
     async showViz(){
          select('#app').elt.innerHTML = this.views.visHTML;
         
+        // this is the feathers client in action!
         let dataFeelings = await client.service('feelings').find({
             query: {
               $sort: { createdAt: -1 },
