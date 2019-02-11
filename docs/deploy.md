@@ -58,3 +58,5 @@ Using the host name of your app: e.g. `https://<your-project-name>.herokuapp.com
 4. select the branch you want to deploy
 5. deploy branch
 6. view app!
+
+

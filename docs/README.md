@@ -1,4 +1,4 @@
-# my-data-feelings Tutorial
+# My Data Feelings Tutorial
 
 > Repo for the project and workshop on how to make your own generative data feelings web application.
 
