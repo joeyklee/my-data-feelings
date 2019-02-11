@@ -43,3 +43,75 @@ module.exports = {
 
 }
 ```
+
+## Allow only 1 user
+> Since we don't want other people to create accounts and login to see our data, let's just limit the amount of users to 1 -- you! 
+
+Featherjs uses this thing called 'hooks' which are basically like middleware - when a process is started- e.g. create a new user - we check to see if we already have 1 user in the db. If so, then throw an error and do not allow the creation of a a new user / login to continue 
+
+```
+feathers generate hook
+```
+
+let's call this hook "limit users"
+
+```sh
+? What is the name of the hook? limit-users
+? What kind of hook should it be? I will add it myself
+   create src/hooks/limit-users.js
+   create test/hooks/limit-users.test.js
+```
+
+
+Now inside `src/hooks/limit-users.js`
+```js
+// Use this hook to manipulate incoming or outgoing data.
+// For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
+
+// eslint-disable-next-line no-unused-vars
+module.exports = function (options = {}) {
+  return async context => {
+      const {app} = context;
+
+      console.log(context.hooks)
+
+      let users = await app.service("users").find();
+
+      // if there are no users, then allow creation, otherwise, do not continue
+      if(users.total === 0){
+        return context;
+      } else {
+        throw new Error('Whoops! Only 1 user allowed');
+      }
+  };
+};
+
+```
+
+
+and to add that hook so that it doesn't allow people to create users. you add it to `src/services/users/users.hooks.js`
+
+```js
+const { authenticate } = require('@feathersjs/authentication').hooks;
+const limitUsers = require('../../hooks/limit-users.js')
+
+const {
+  hashPassword, protect
+} = require('@feathersjs/authentication-local').hooks;
+
+module.exports = {
+  before: {
+    all: [],
+    find: [ authenticate('jwt') ],
+    get: [ authenticate('jwt') ],
+    create: [ hashPassword(), limitUsers()],
+    update: [ hashPassword(),  authenticate('jwt') ],
+    patch: [ hashPassword(),  authenticate('jwt') ],
+    remove: [ authenticate('jwt') ]
+  },
+ 
+ ...
+
+```
+
+Whew! Now all the pieces on the back end should be complete. We will have to do a few last things when we deploy our app to the web, but for now, let's get back to the front end interface.

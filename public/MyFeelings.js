@@ -1,11 +1,3 @@
-# Step 5 - Frontend Pt. 2
-
-## MyFeelings Class
-> We want to encapsulate our visualization into a class called MyFeelings. NOTE the use of p5.js instance mode to create individual canvases for each data object entry.
-
-Add `public/MyFeelings.js`: 
-
-```js
 class MyFeelings {
     /**
      * 
@@ -86,44 +78,3 @@ class MyFeelings {
     }
 
 }
-
-```
-
-And make sure to update your `public/index.html` file.
-
-```html
-<html>
-  <head>
-    <title>My Data Feelings App</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- P5JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js"></script>
-    <!-- MyFeelings -->
-    <script src="MyFeelings.js"></script>
-    <!-- FeathersJS -->
-    <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
-    <script src="feathersClient.js"></script>
-    <!-- VIEWS -->
-    <script src="Views.js"></script>
-    <!-- INDEXJS -->
-    <script src="index.js"></script>
-  </body>
-</html>
-
-```
-
-
-Now it's time to wire up all the front end components!
-
-## Add App functionality
-> There's a lot going on here, but we will talk through those pieces. For now, just copy this updated `App` class
-
-```js
-
-```
-
