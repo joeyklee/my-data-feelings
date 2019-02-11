@@ -1,8 +1,8 @@
-# my-data-feelings
+# my-data-feelings Tutorial
 
 > Repo for the project and workshop on how to make your own generative data feelings web application.
 
-NOTE: for documentation and details see: `/docs`
+![image of sketch of project](../assets/sketch-browse.png)
 
 ## About
 
