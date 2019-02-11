@@ -90,8 +90,8 @@ class Views {
                   <input type="radio" id="fitness-input-no" name="fitness" value="no" checked> 
                   </div>
               </fieldset>
-              <input id="submit-input" type="submit" value="Submit! 🚀">
             </form>
+            <button id="submit-input">Submit! 🚀</button>
             </div>
             </section>
           </main>

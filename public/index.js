@@ -15,6 +15,7 @@ function setup() {
 
 function draw() {
   // Add main here
+
   app.login()
 }
 
@@ -23,6 +24,8 @@ class App {
   // NOTE: Requires p5.js dom library (e.g. see select())
   constructor(_views) {
     this.views = _views;
+    this.setup = this.setup.bind(this)
+    this.submitFeelings = this.submitFeelings.bind(this)
   }
 
   async showViz() {
@@ -63,19 +66,22 @@ class App {
     const stressInput = select("#stress-input");
     const contentmentInput = select("#contentment-input");
     const productivityInput = select("#productivity-input");
-
+    const submitInput = select("#submit-input");
+    
+    // on buttonpress submit feelings!
+    submitInput.mousePressed(this.submitFeelings);
     // create an array of those inputs to iterate through them
     // we will set the inital state of the slider labels
     // we will also make sure to change the slider label value on .changed()
     const inputs = [anxietyInput, stressInput, contentmentInput, productivityInput];
     inputs.forEach(i => {
       // set the initial value
-      let label = select(`#${i.id}-label`)
-      label.elt.innerHTML = i.value
+      let label = select(`#${i.elt.id}-label`)
+      label.elt.innerHTML = i.elt.value
 
       // if it changes, then update it by adding an event listener
       i.changed(function (e) {
-        label.elt.innerHTML = i.value;
+        label.elt.innerHTML = i.elt.value;
       })
     });
   }
@@ -99,9 +105,9 @@ showLogin(error) {
 
   async submitFeelings(e) {
     try {
-      e.preventDefault();
+    //   e.preventDefault();
       console.log("submitted!")
-      const myForm = new FormData(select("#moodForm"));
+      const myForm = new FormData(document.querySelector("#moodForm"));
       const payload = {
         anxiety: myForm.get('anxiety'),
         contentment: myForm.get('contentment'),
@@ -112,10 +118,10 @@ showLogin(error) {
       }
       await client.authenticate();
       let newData = await feelings.create(payload);
-      await showViz();
+      await this.showViz();
 
     } catch (error) {
-
+        return error;
     }
   }
 
