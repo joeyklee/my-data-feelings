@@ -21,7 +21,7 @@
 Open up your terminal. Copy and paste the following and press enter:
 
 ```
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 
@@ -31,7 +31,7 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 After that finishes installing (you may be prompted to install things like XCode in the process), then copy and paste the following:
 
 ```
-$ brew install node
+brew install node
 ```
 
 ## Install Mongodb
@@ -40,12 +40,12 @@ $ brew install node
 Use `brew install` to install mongodb. 
 
 ```sh
-$ brew install mongodb
+brew install mongodb
 ```
 
 Make a data folder where your mongodb will live
 ```sh
-$ mkdir -p /data/db
+sudo mkdir -p /data/db
 ```
 
 Make sure you have the right permissions
@@ -60,7 +60,7 @@ sudo chown -R `id -un` /data/db
 
 In your commandline run:
 ```sh
-$ mongod
+mongod
 ```
 
 This will start up mongodb on your machine! You now have mongodb running on your machine. The default `mongodb` port runs at `mongodb://localhost:27017`. When you use mongodb, you will send data from you application to mongodb through this port connection. 

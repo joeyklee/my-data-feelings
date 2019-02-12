@@ -5,7 +5,7 @@
 
 Run:
 ```sh
-$ feathers generate service
+feathers generate service
 ```
 
 You'll get a bunch of prompts. Here's what I chose:
